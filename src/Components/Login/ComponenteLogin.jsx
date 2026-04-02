@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ComponentLogin() {
 
     const { register, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data); // 👈 aquí se envían los datos
+    const { login } = useAuth();
+
+    const onSubmit = async (data) => {
+        const res = await login(data);
+        console.log(res);
     };
 
     return (
