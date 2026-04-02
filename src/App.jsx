@@ -4,6 +4,7 @@ import Home from './views/Home'
 import Login from './views/Login'
 import Dashboard from './views/Dashboard'
 import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './services/ProtectedRoute'
 // import './App.css'
 
 function App() {
@@ -14,7 +15,9 @@ function App() {
         <Routes >
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/dashboard' element={<Dashboard />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </>
