@@ -1,4 +1,15 @@
+import { useEffect } from "react";
+import { useTask } from "../../../context/TaskContext";
+
+
 export default function NotasSection({ tasks, toggleTask }) {
+
+    const { task } = useTask();
+
+    useEffect(() => {
+        // alert(task)
+    }, [])
+
     return (
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -35,6 +46,17 @@ export default function NotasSection({ tasks, toggleTask }) {
                 <div className="mt-auto">
                     <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">#Inspiración</span>
                 </div>
+            </div>
+
+            <div>
+                {
+                    task.map((x, pos) => (
+                        <div key={pos}>
+                            <h1>{x.name}</h1>
+                            <p>{x.description}</p>
+                        </div>
+                    ))
+                }
             </div>
 
         </div>

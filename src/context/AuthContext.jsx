@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { loginRequest } from "../services/auth";
 import { setAuthHeader } from "../services/authHeader";
 
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 

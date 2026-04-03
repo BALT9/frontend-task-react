@@ -1,14 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
 
 export default function ComponentLogin() {
 
     const { register, handleSubmit } = useForm();
 
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
+
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) navigate("/dashboard");
+    }, [isAuthenticated, navigate]);
 
     const onSubmit = async (data) => {
         const res = await login(data);
