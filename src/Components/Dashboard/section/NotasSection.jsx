@@ -1,63 +1,70 @@
 import { useEffect } from "react";
 import { useTask } from "../../../context/TaskContext";
 
-
-export default function NotasSection({ tasks, toggleTask }) {
+export default function NotasSection({ toggleTask }) {
 
     const { task, getTask } = useTask();
 
     useEffect(() => {
-        getTask()
-    }, [])
+        getTask();
+    }, []);
+
+    if (task.length === 0) {
+        return (
+            <div className="text-center text-gray-500 mt-10">
+                No hay tareas disponibles 📭
+            </div>
+        );
+    }
 
     return (
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
 
-            {/* Nota 1: Checklist Interactiva */}
-            <div className="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 shadow-sm hover:border-purple-200 transition-all flex flex-col">
-                <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-                    Pendientes <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
-                </h3>
-                <ul className="space-y-4 flex-grow">
-                    {tasks.map(task => (
-                        <li key={task.id} className="flex items-center gap-3 group cursor-pointer" onClick={() => toggleTask(task.id)}>
-                            <div className={`w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all ${task.completed ? 'bg-purple-600 border-purple-600' : 'border-slate-200 group-hover:border-purple-400'}`}>
-                                {task.completed && <span className="text-white text-[10px]">✓</span>}
-                            </div>
-                            <span className={`text-sm font-medium ${task.completed ? 'text-slate-300 line-through' : 'text-slate-700'}`}>
-                                {task.text}
-                            </span>
-                        </li>
-                    ))}
-                </ul>
-                <div className="mt-6 pt-4 border-t border-slate-50 flex justify-between items-center">
-                    <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Checklist</span>
-                    <span className="text-[10px] font-bold text-purple-600 italic">80% hecho</span>
+            {task.map((x, pos) => (
+                <div
+                    key={pos}
+                    className="bg-white rounded-2xl p-6 shadow-xs hover:shadow-md transition-all border border-gray-100 flex flex-col justify-between"
+                >
+
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-semibold text-lg text-gray-800">
+                            {x.name}
+                        </h3>
+                        <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-6">
+                        {x.description}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between">
+                        <label className="text-sm text-gray-500">
+                            Activo
+                        </label>
+
+                        <input
+                            type="checkbox"
+                            className="w-5 h-5 accent-purple-600 cursor-pointer"
+                            checked={x.active}
+                            onChange={() => toggleTask?.(x.id)}
+                        />
+                    </div>
+
+                    <div className="flex gap-2 mt-6">
+                        <button className="flex-1 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 text-white text-sm font-semibold shadow-md hover:scale-[1.03] transition cursor-pointer">
+                            Editar
+                        </button>
+
+                        <button className="flex-1 py-2 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-semibold shadow-md hover:scale-[1.03] transition cursor-pointer">
+                            Eliminar
+                        </button>
+                    </div>
+
                 </div>
-            </div>
-
-            {/* Nota 2: Idea de Branding */}
-            <div className="bg-purple-50 border-2 border-transparent rounded-[2.5rem] p-8 shadow-sm hover:border-purple-200 transition-all flex flex-col group">
-                <div className="mb-4 text-2xl group-hover:rotate-12 transition-transform inline-block">💡</div>
-                <h3 className="font-bold text-lg mb-3">Idea de Branding</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6 italic">
-                    "El morado representa creatividad y ambición. Usar variantes lavanda para fondos y morado eléctrico para botones."
-                </p>
-                <div className="mt-auto">
-                    <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest">#Inspiración</span>
-                </div>
-            </div>
-
-            <div>
-                {
-                    task.map((x, pos) => (
-                        <div key={pos}>
-                            <h1>{x.name}</h1>
-                            <p>{x.description}</p>
-                        </div>
-                    ))
-                }
-            </div>
+            ))}
 
         </div>
     );
