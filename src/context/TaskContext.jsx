@@ -14,9 +14,9 @@ export const TaskProvider = ({ children }) => {
 
     const [task, setTask] = useState([]);
 
-    useEffect(() => {
-        getTask();
-    }, [])
+    // useEffect(() => {
+    //     getTask();
+    // }, [])
 
     const getTask = async () => {
         try {

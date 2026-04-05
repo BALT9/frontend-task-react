@@ -4,10 +4,10 @@ import { useTask } from "../../../context/TaskContext";
 
 export default function NotasSection({ tasks, toggleTask }) {
 
-    const { task } = useTask();
+    const { task, getTask } = useTask();
 
     useEffect(() => {
-        // alert(task)
+        getTask()
     }, [])
 
     return (
