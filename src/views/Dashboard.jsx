@@ -3,15 +3,19 @@ import Sidebar from '../Components/Dashboard/Sidebar';
 import NotasSection from '../Components/Dashboard/section/NotasSection';
 import ProyectosSection from '../Components/Dashboard/section/ProyectosSection';
 import ModalTask from '../Components/Dashboard/section/modal/ModalTask';
+import { useTask } from '../context/TaskContext';
 
 export default function Dashboard() {
     const [activeTab, setActiveTab] = useState('notas');
     const [openModal, setOpenModal] = useState(false);
 
+    const { createTask } = useTask();
+
     // Función que se llama al enviar el formulario del modal
     const handleAddTask = (newTask) => {
         console.log("Datos del formulario:", newTask);
         // Aquí puedes enviar a tu API o actualizar tu context
+        createTask(newTask);
     };
 
     return (

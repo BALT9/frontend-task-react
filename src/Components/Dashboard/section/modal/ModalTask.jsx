@@ -78,7 +78,7 @@ export default function ModalTask({ isOpen, onClose, onSubmit, initialData }) {
                     <label className="flex items-center gap-2 text-sm text-gray-600">
                         <input
                             type="checkbox"
-                            {...register("active")}
+                            {...register("isActive")}
                             className="w-4 h-4 accent-purple-600"
                         />
                         Activa

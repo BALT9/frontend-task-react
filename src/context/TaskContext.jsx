@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { getTaskRequest } from "../services/task";
+import { getTaskRequest, postTaskRequest } from "../services/task";
 
 const TaskContext = createContext();
 
@@ -29,10 +29,21 @@ export const TaskProvider = ({ children }) => {
         }
     }
 
+    const createTask = async (datos) => {
+        try {
+            const res = await postTaskRequest(datos);
+            console.log(res.data);
+
+        } catch (error) {
+            console.log("Error al crear tarea", error)
+        }
+    }
+
     return (
         <TaskContext.Provider value={{
-           task,
-           getTask
+            task,
+            getTask,
+            createTask
         }}>
             {children}
         </TaskContext.Provider>
