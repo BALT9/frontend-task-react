@@ -3,16 +3,17 @@ import { useTask } from "../../../context/TaskContext";
 
 export default function NotasSection({ toggleTask }) {
 
-    const { task, getTask } = useTask();
+    const { tasks, getTasks } = useTask();
 
     useEffect(() => {
-        getTask();
+        // lista las tareas
+        getTasks();
     }, []);
 
-    if (task.length === 0) {
+    if (tasks.length === 0) {
         return (
             <div className="text-center text-gray-500 mt-10">
-                No hay tareas disponibles 📭
+                No hay tareas disponibles
             </div>
         );
     }
@@ -20,7 +21,7 @@ export default function NotasSection({ toggleTask }) {
     return (
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
 
-            {task.map((x, pos) => (
+            {tasks.map((x, pos) => (
                 <div
                     key={pos}
                     className="bg-white rounded-2xl p-6 shadow-xs hover:shadow-md transition-all border border-gray-100 flex flex-col justify-between"

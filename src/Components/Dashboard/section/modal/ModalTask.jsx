@@ -11,7 +11,7 @@ export default function ModalTask({ isOpen, onClose, onSubmit, initialData }) {
     } = useForm({
         defaultValues: {
             name: initialData?.name || "",
-            description: initialData?.description || "",
+            description: initialData?.description || "", 
             active: initialData?.active || false
         }
     });
