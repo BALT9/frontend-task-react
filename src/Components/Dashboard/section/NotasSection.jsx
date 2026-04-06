@@ -1,14 +1,23 @@
 import { useEffect } from "react";
-import { useTask } from "../../../context/TaskContext";
+import { useTask } from "../../../context/useTask";
 
 export default function NotasSection({ toggleTask }) {
 
-    const { tasks, getTasks } = useTask();
+    const { tasks, getTasks, deleteTask } = useTask();
 
     useEffect(() => {
         // lista las tareas
         getTasks();
     }, []);
+
+    async function deleteTaskById(id) {
+        try {
+            await deleteTask(id);
+            alert("Tarea eliminada")
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     if (tasks.length === 0) {
         return (
@@ -59,7 +68,9 @@ export default function NotasSection({ toggleTask }) {
                             Editar
                         </button>
 
-                        <button className="flex-1 py-2 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-semibold shadow-md hover:scale-[1.03] transition cursor-pointer">
+                        <button
+                            onClick={() => deleteTaskById(x.id)}
+                            className="flex-1 py-2 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-semibold shadow-md hover:scale-[1.03] transition cursor-pointer">
                             Eliminar
                         </button>
                     </div>

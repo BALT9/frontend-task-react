@@ -3,7 +3,7 @@ import Sidebar from '../Components/Dashboard/Sidebar';
 import NotasSection from '../Components/Dashboard/section/NotasSection';
 import ProyectosSection from '../Components/Dashboard/section/ProyectosSection';
 import ModalTask from '../Components/Dashboard/section/modal/ModalTask';
-import { useTask } from '../context/TaskContext';
+import { useTask } from '../context/useTask';
 
 export default function Dashboard() {
     const [activeTab, setActiveTab] = useState('notas');
