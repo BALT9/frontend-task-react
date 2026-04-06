@@ -6,22 +6,21 @@ export default function ModalTask({ isOpen, onClose, onSubmit, initialData }) {
         register,
         handleSubmit,
         reset,
-        watch,
         formState: { errors }
     } = useForm({
         defaultValues: {
-            name: initialData?.name || "",
-            description: initialData?.description || "", 
-            active: initialData?.active || false
+            name: "",
+            description: "",
+            isActive: false
         }
     });
 
-    // Reset del formulario al abrir/cerrar
+    // Reset cuando cambia initialData
     useEffect(() => {
         reset({
             name: initialData?.name || "",
             description: initialData?.description || "",
-            active: initialData?.active || false
+            isActive: initialData?.isActive || false
         });
     }, [initialData, reset, isOpen]);
 
@@ -30,10 +29,8 @@ export default function ModalTask({ isOpen, onClose, onSubmit, initialData }) {
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
 
-            {/* Modal */}
             <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 relative animate-fadeIn">
 
-                {/* Close button */}
                 <button
                     onClick={onClose}
                     className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
@@ -41,15 +38,13 @@ export default function ModalTask({ isOpen, onClose, onSubmit, initialData }) {
                     ✖
                 </button>
 
-                {/* Title */}
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">
                     {initialData ? "Editar tarea" : "Nueva tarea"}
                 </h2>
 
-                {/* Form */}
                 <form
-                    onSubmit={handleSubmit((data) => {
-                        onSubmit(data);
+                    onSubmit={handleSubmit(async (data) => {
+                        await onSubmit(data);
                         onClose();
                     })}
                     className="flex flex-col gap-4"
@@ -90,7 +85,7 @@ export default function ModalTask({ isOpen, onClose, onSubmit, initialData }) {
                             type="submit"
                             className="flex-1 py-2 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition"
                         >
-                            Guardar
+                            {initialData ? "Actualizar" : "Guardar"}
                         </button>
 
                         <button

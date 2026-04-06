@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { deleteTaskRequest, getTaskRequest, postTaskRequest } from "../services/task";
+import { deleteTaskRequest, getTaskRequest, postTaskRequest, updateTaskRequest } from "../services/task";
 
 export const TaskContext = createContext();
 
@@ -44,8 +44,23 @@ export const TaskProvider = ({ children }) => {
         }
     };
 
+    const updateTask = async (id, data) => {
+        try {
+            const res = await updateTaskRequest(id, data);
+            console.log(res.data);
+
+            setTasks((prev) =>
+                prev.map((task) =>
+                    task.id === id ? res.data : task
+                )
+            );
+        } catch (error) {
+            console.error("Error al actualizar", error);
+        }
+    };
+
     return (
-        <TaskContext.Provider value={{ tasks, getTasks, createTask, deleteTask, loading, error }}>
+        <TaskContext.Provider value={{ tasks, getTasks, createTask, deleteTask, updateTask, loading, error }}>
             {children}
         </TaskContext.Provider>
     );
