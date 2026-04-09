@@ -13,7 +13,7 @@ export default function ProyectosSection() {
         <>
             <div className="text-center text-purple-600 font-bold">Aquí van los Usuarios</div>
             <div>
-                {
+                { 
                     user.map((x, pos) => (
                         <div key={pos}>
                             <h2>{x.id}</h2>
