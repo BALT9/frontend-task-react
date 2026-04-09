@@ -13,7 +13,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       <nav className="flex-grow w-full space-y-2">
         <SidebarItem icon="📝" label="Mis Notas" active={activeTab === 'notas'} onClick={() => setActiveTab('notas')} />
         {/* <SidebarItem icon="📅" label="Calendario" active={activeTab === 'cal'} onClick={() => setActiveTab('cal')} /> */}
-        <SidebarItem icon="📁" label="Proyectos" active={activeTab === 'pro'} onClick={() => setActiveTab('pro')} />
+        <SidebarItem icon="📁" label="Mis Usuarios" active={activeTab === 'pro'} onClick={() => setActiveTab('pro')} />
       </nav>
 
       <div className="mt-auto pt-6 border-t border-slate-50 w-full">
