@@ -4,7 +4,7 @@ import { useUser } from "../../../../context/useUser";
 
 export default function ModalUser({ isOpen, onClose, initialData }) {
 
-    const { createUser } = useUser();
+    const { createUser, updateUser } = useUser();
 
     const {
         register,
@@ -30,11 +30,21 @@ export default function ModalUser({ isOpen, onClose, initialData }) {
 
     if (!isOpen) return null;
 
-    const onSubmit = async(data) => {
-        console.log("Datos del usuario:", data);
-        // const res = await 
-        createUser(data);
-        onClose();
+    const onSubmit = async (data) => {
+        try {
+            if (initialData) {
+                // EDITAR
+                await updateUser(initialData.id, data);
+            } else {
+                // CREAR
+                await createUser(data);
+            }
+
+            reset();
+            onClose();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -62,9 +72,8 @@ export default function ModalUser({ isOpen, onClose, initialData }) {
                         type="text"
                         placeholder="Nombre"
                         {...register("name", { required: "El nombre es obligatorio" })}
-                        className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                            errors.name ? "border-red-500" : "border-gray-200"
-                        }`}
+                        className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.name ? "border-red-500" : "border-gray-200"
+                            }`}
                     />
                     {errors.name && (
                         <span className="text-red-500 text-sm">{errors.name.message}</span>
@@ -81,9 +90,8 @@ export default function ModalUser({ isOpen, onClose, initialData }) {
                                 message: "Email inválido"
                             }
                         })}
-                        className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                            errors.email ? "border-red-500" : "border-gray-200"
-                        }`}
+                        className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.email ? "border-red-500" : "border-gray-200"
+                            }`}
                     />
                     {errors.email && (
                         <span className="text-red-500 text-sm">{errors.email.message}</span>
@@ -92,17 +100,22 @@ export default function ModalUser({ isOpen, onClose, initialData }) {
                     {/* Password */}
                     <input
                         type="password"
-                        placeholder="Contraseña"
+                        placeholder={
+                            initialData
+                                ? "Nueva contraseña (opcional)"
+                                : "Contraseña"
+                        }
                         {...register("password", {
-                            required: "La contraseña es obligatoria",
+                            required: initialData
+                                ? false
+                                : "La contraseña es obligatoria",
                             minLength: {
                                 value: 6,
                                 message: "Mínimo 6 caracteres"
                             }
                         })}
-                        className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                            errors.password ? "border-red-500" : "border-gray-200"
-                        }`}
+                        className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.password ? "border-red-500" : "border-gray-200"
+                            }`}
                     />
                     {errors.password && (
                         <span className="text-red-500 text-sm">{errors.password.message}</span>
