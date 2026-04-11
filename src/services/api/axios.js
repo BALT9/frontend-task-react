@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_Backend = 'http://localhost:3000/';
+const URL_Backend = 'https://crud-apirest-nest-task.onrender.com';
 
 const api = axios.create({
     baseURL: URL_Backend,
